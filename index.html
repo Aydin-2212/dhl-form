@@ -71,7 +71,11 @@ function checkOut() {
   .then(res => res.text())
   .then(msg => {
     alert("Checked out successfully.");
-    document.getElementById("success-screen").innerHTML = "<h2 style='color: black;'>Thank you!</h2>";
+    document.getElementById("success-screen").innerHTML = `
+      <h2 style='color: black; font-size: 22px;'>Thank you for visiting!</h2>
+      <p style='color: #333; font-size: 16px;'>Your check-out has been recorded.</p>
+      <img src="https://cdn-icons-png.flaticon.com/512/845/845646.png" alt="Checkmark" style="width: 80px; height: 80px; margin-top: 20px;" />
+    `;'>Thank you!</h2>";
   })
   .catch(err => alert("Checkout failed."));
 }
@@ -200,8 +204,8 @@ function checkOut() {
       const rowId = result.rowId;
       localStorage.setItem("dhlRowId", rowId);
       alert("Form submitted successfully.");
-      this.reset();
       clearSignature();
+      document.getElementById("form").style.display = "none";
       document.getElementById("form").style.display = "none";
       document.getElementById("success-screen").style.display = "flex";
     })
