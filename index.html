@@ -61,7 +61,7 @@
 function checkOut() {
   const now = new Date().toISOString();
   const rowId = localStorage.getItem("dhlRowId");
-  fetch("https://docs.google.com/spreadsheets/d/1UpcOygOHHRefzFuBgoSRSXbc_MJVo6IDxxnclb6UPfc/edit?usp=sharing", {
+  fetch("https://script.google.com/macros/s/AKfycbxrIXbwPtrDJbsL1vWBE29Z_6cXl1JZtyUESNfxKH0xJ40t2sNS5xyCWKtSA--zZjrWAw/exec", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -215,7 +215,7 @@ function checkOut() {
       timestamp: new Date().toISOString()
     };
 
-    fetch("https://docs.google.com/spreadsheets/d/1UpcOygOHHRefzFuBgoSRSXbc_MJVo6IDxxnclb6UPfc/edit?gid=0#gid=0", {
+    fetch("https://script.google.com/macros/s/AKfycbxrIXbwPtrDJbsL1vWBE29Z_6cXl1JZtyUESNfxKH0xJ40t2sNS5xyCWKtSA--zZjrWAw/exec", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
