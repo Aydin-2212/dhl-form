@@ -61,7 +61,7 @@
 function checkOut() {
   const now = new Date().toISOString();
   const rowId = localStorage.getItem("dhlRowId");
-  fetch("https://script.google.com/macros/s/AKfycbxrIXbwPtrDJbsL1vWBE29Z_6cXl1JZtyUESNfxKH0xJ40t2sNS5xyCWKtSA--zZjrWAw/exec", {
+  fetch("https://docs.google.com/spreadsheets/d/1UpcOygOHHRefzFuBgoSRSXbc_MJVo6IDxxnclb6UPfc/edit?usp=sharing", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -177,6 +177,31 @@ function checkOut() {
     e.preventDefault();
     const dataURL = canvas.toDataURL();
     const formData = new FormData(this);
+    const targetLat = 52.10372;
+    const targetLng = 5.06577;
+    const maxDistanceMeters = 50;
+
+    const userLat = parseFloat(formData.get("latitude"));
+    const userLng = parseFloat(formData.get("longitude"));
+
+    function distanceInMeters(lat1, lon1, lat2, lon2) {
+      const R = 6371000;
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return R * c;
+    }
+
+    const distance = distanceInMeters(userLat, userLng, targetLat, targetLng);
+
+    if (distance > maxDistanceMeters) {
+      alert("You are not at the required location.");
+      return;
+    }
+
     const jsonData = {
       firstName: formData.get("firstName"),
       lastName: formData.get("lastName"),
@@ -190,7 +215,7 @@ function checkOut() {
       timestamp: new Date().toISOString()
     };
 
-    fetch("https://script.google.com/macros/s/AKfycbxrIXbwPtrDJbsL1vWBE29Z_6cXl1JZtyUESNfxKH0xJ40t2sNS5xyCWKtSA--zZjrWAw/exec", {
+    fetch("https://docs.google.com/spreadsheets/d/1UpcOygOHHRefzFuBgoSRSXbc_MJVo6IDxxnclb6UPfc/edit?gid=0#gid=0", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
